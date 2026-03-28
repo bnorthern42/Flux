@@ -145,3 +145,8 @@ Not curated. Not tracked. Just… there.
 MIT
 
 ---
+## Deps
+
+- odin - dev-2026-03:1a5126c6b
+- sdl3 - 3.4.2-1.1
+- sdl3_ttf - 3.2.2-3.2
