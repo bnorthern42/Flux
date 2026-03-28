@@ -1,7 +1,3 @@
-Here’s a tightened version of your `README.md` with your exact intent baked in—no fluff, no fake completeness:
-
----
-
 # flux
 
 A minimal GUI text editor built in Odin.
