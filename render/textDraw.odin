@@ -16,8 +16,7 @@ initFont :: proc(sdlRenderer: ^sdl.Renderer) -> FontState{
 }
 setFontFile :: proc(fileName: string, size: f32, state: ^FontState){
 	cStr:= strings.clone_to_cstring(fileName, context.temp_allocator)
-	state.font = ttf.OpenFont( cStr , size ) //-1 for default size
-
+	state.font = ttf.OpenFont( cStr , size )
 }
 getTextEngine :: proc(state: ^FontState) -> ^ttf.TextEngine{
 	return ttf.CreateRendererTextEngine(state.sdlRenderer)
