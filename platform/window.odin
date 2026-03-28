@@ -2,10 +2,12 @@ package platform
 import sdl "vendor:sdl3"
 import "core:fmt"
 
+EditorName :: "Flux Editor"
+
 initWindow :: proc() ->(	eWindow: ^sdl.Window,
 					eRenderer: ^sdl.Renderer, ok: bool){
 	result:= sdl.CreateWindowAndRenderer(
-		"Flux Editor",
+		EditorName,
 		1200,
 		800,
 		{sdl.WindowFlags.OPENGL},

@@ -39,7 +39,7 @@ main :: proc() {
 		render.clear(&renderState)
 
 	    // Draw a white cursor block as a test (x: 100, y: 100, width: 10, height: 20)
-	    render.draw_rect(&renderState, 100, 100, 10, 20, 255, 255, 255, 255)
+	    render.drawRect(&renderState, 100, 100, 10, 20, 255, 255, 255, 255)
 
 	    render.present(&renderState)
 	}

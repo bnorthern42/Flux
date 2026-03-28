@@ -23,8 +23,8 @@ clear :: proc(state: ^RendererState) {
     sdl.RenderClear(state.sdlRenderer)
 }
 
-// Draws a solid rectangle (perfect for drawing your cursor!)
-draw_rect :: proc(state: ^RendererState, x, y, w, h: f32, r, g, b, a: u8) {
+// Draws a solid rectangle
+drawRect :: proc(state: ^RendererState, x, y, w, h: f32, r, g, b, a: u8) {
     sdl.SetRenderDrawColor(state.sdlRenderer, r, g, b, a)
 
     // SDL3 uses FRect (floats) for rendering
