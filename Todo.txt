@@ -1,0 +1,7 @@
+[x] Window creation
+[]  text window area
+    -[]  start with single buffer/no table, static text display
+
+[]  text input
+    -[] rope DS
+[]  File I/O
