@@ -20,7 +20,7 @@ main :: proc() {
 	}
 	defer sdl.DestroyRenderer(editorRenderer)
 	defer sdl.DestroyWindow(editorWindow)
-	render_state := render.init(editorRenderer)
+	renderState := render.init(editorRenderer)
 
 	running := true
 	vec:= v.Vec2(1.0, 1.0)
@@ -32,14 +32,15 @@ main :: proc() {
 				running = false
 			}
 		}
+		fontSt:= render.initFont(editorRenderer)
+		render.setFontFile("assets/SUSEMono[wght].ttf",16, &fontSt)
+		textEngine:= render.getTextEngine(&fontSt)
 
-		editorFont:= ttf.OpenFont("assets/SUSEMono[wght].ttf",16)
-		textEngine:= ttf.CreateRendererTextEngine(editorRenderer)
-		render.clear(&render_state)
+		render.clear(&renderState)
 
 	    // Draw a white cursor block as a test (x: 100, y: 100, width: 10, height: 20)
-	    render.draw_rect(&render_state, 100, 100, 10, 20, 255, 255, 255, 255)
+	    render.draw_rect(&renderState, 100, 100, 10, 20, 255, 255, 255, 255)
 
-	    render.present(&render_state)
+	    render.present(&renderState)
 	}
 }
