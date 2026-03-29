@@ -15,7 +15,7 @@ main :: proc() {
 		return
 	}
 	defer sdl.Quit()
-	editorWindow, editorRenderer, ok:=pform.initWindow()
+	editorWindow, editorRenderer, ok:=pform.initWindow(500, 300)
 	if !ok {
 		return
 	}
@@ -44,7 +44,7 @@ main :: proc() {
 	    // Draw a white cursor block as a test (x: 100, y: 100, width: 10, height: 20)
 		render.setColor(&renderState, 0, 0, 0, 255)
 	   	render.drawRect(&renderState, 100, 100, 10, 20)
-		render.drawText(&fontSt, "Flux", 200, 100)
+		render.drawText(&fontSt, "I'm a text viewer now", 200, 100)
 	    render.present(&renderState)
 	}
 	defer ttf.Quit()

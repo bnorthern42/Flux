@@ -4,12 +4,12 @@ import "core:fmt"
 
 EditorName :: "Flux Editor"
 
-initWindow :: proc() ->(	eWindow: ^sdl.Window,
+initWindow :: proc(width, height: i32) ->(	eWindow: ^sdl.Window,
 					eRenderer: ^sdl.Renderer, ok: bool){
 	result:= sdl.CreateWindowAndRenderer(
 		EditorName,
-		1200,
-		800,
+		width,
+		height,
 		{sdl.WindowFlags.OPENGL},
 		&eWindow,
 		&eRenderer,
