@@ -8,6 +8,7 @@ import sdl "vendor:sdl3"
 import v "utils"
 import pform "platform"
 import render "render"
+import cflux "coreflux"
 
 main :: proc() {
 	if !sdl.Init({sdl.InitFlags.VIDEO}) {
@@ -24,6 +25,10 @@ main :: proc() {
 
 	running := true
 	vec:= v.Vec2(1.0, 1.0)
+	ttf.Init()
+	fontSt:= render.initFont(editorRenderer)
+	render.setFontFile("assets/DejaVuSansMono.ttf",16, &fontSt)
+	textEngine:= render.getTextEngine(&fontSt)
 	for running {
 		event: sdl.Event
 
@@ -32,15 +37,15 @@ main :: proc() {
 				running = false
 			}
 		}
-		fontSt:= render.initFont(editorRenderer)
-		render.setFontFile("assets/SUSEMono[wght].ttf",16, &fontSt)
-		textEngine:= render.getTextEngine(&fontSt)
+
 
 		render.clear(&renderState)
 
 	    // Draw a white cursor block as a test (x: 100, y: 100, width: 10, height: 20)
-	    render.drawRect(&renderState, 100, 100, 10, 20, 255, 255, 255, 255)
-
+		render.setColor(&renderState, 0, 0, 0, 255)
+	   	render.drawRect(&renderState, 100, 100, 10, 20)
+		render.drawText(&fontSt, "Flux", 200, 100)
 	    render.present(&renderState)
 	}
+	defer ttf.Quit()
 }

@@ -1,38 +1,71 @@
 package render
 
 import sdl "vendor:sdl3"
+import cflux "../coreflux"
 
-// We store the SDL renderer here, plus any future rendering state
-// like loaded fonts, glyph caches, or theme colors.
 RendererState :: struct {
     sdlRenderer: ^sdl.Renderer,
-    // font: ^ttf.Font, // We'll need this later!
+    currentColor: [4]u8,
 }
 
-// Initialize our wrapper
+// ---------- INIT ----------
+
 init :: proc(sdlRenderer: ^sdl.Renderer) -> RendererState {
     return RendererState{
         sdlRenderer = sdlRenderer,
+        currentColor = [4]u8{255, 255, 255, 255}, // safe default
     }
 }
 
-// Wipes the screen fresh every frame
+// ---------- FRAME ----------
+
 clear :: proc(state: ^RendererState) {
-    // A nice, easy-on-the-eyes dark gray background
     sdl.SetRenderDrawColor(state.sdlRenderer, 30, 30, 30, 255)
     sdl.RenderClear(state.sdlRenderer)
+
+    // keep state in sync
+    state.currentColor = [4]u8{30, 30, 30, 255}
 }
 
-// Draws a solid rectangle
-drawRect :: proc(state: ^RendererState, x, y, w, h: f32, r, g, b, a: u8) {
-    sdl.SetRenderDrawColor(state.sdlRenderer, r, g, b, a)
+present :: proc(state: ^RendererState) {
+    sdl.RenderPresent(state.sdlRenderer)
+}
 
-    // SDL3 uses FRect (floats) for rendering
+// ---------- COLOR ----------
+
+setColor :: proc(state: ^RendererState, r, g, b, a: u8) {
+    newColor := [4]u8{r, g, b, a}
+
+    if state.currentColor != newColor {
+        sdl.SetRenderDrawColor(state.sdlRenderer, r, g, b, a)
+        state.currentColor = newColor
+    }
+}
+
+// ---------- DRAW ----------
+
+drawRect :: proc(state: ^RendererState, x, y, w, h: f32) {
     rect := sdl.FRect{x, y, w, h}
     sdl.RenderFillRect(state.sdlRenderer, &rect)
 }
 
-// Swaps the backbuffer to the screen
-present :: proc(state: ^RendererState) {
-    sdl.RenderPresent(state.sdlRenderer)
+// ---------- VIEW ----------
+
+// assuming View comes from coreflux
+renderView :: proc(state: ^RendererState, v: ^cflux.View) {
+    // example styling
+    setColor(state, 50, 50, 50, 255)
+    drawRect(state, v.x, v.y, v.w, v.h)
+}
+setClip :: proc(state: ^RendererState, x, y, w, h: f32) {
+	rect := sdl.Rect{
+	    i32(x),
+	    i32(y),
+	    i32(w),
+	    i32(h),
+	}
+    sdl.SetRenderClipRect(state.sdlRenderer, &rect)
+}
+snap :: proc(v: f32) -> f32 {
+    return f32(int(v))
 }
