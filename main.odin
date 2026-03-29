@@ -15,7 +15,7 @@ main :: proc() {
 		return
 	}
 	defer sdl.Quit()
-	editorWindow, editorRenderer, ok:=pform.initWindow(500, 300)
+	editorWindow, editorRenderer, ok:=pform.initWindow(800, 700)
 	if !ok {
 		return
 	}
@@ -29,6 +29,8 @@ main :: proc() {
 	fontSt:= render.initFont(editorRenderer)
 	render.setFontFile("assets/DejaVuSansMono.ttf",16, &fontSt)
 	textEngine:= render.getTextEngine(&fontSt)
+	editor := cflux.initEditor()
+	cflux.openFileInView(&editor, "main.odin", 0)
 	for running {
 		event: sdl.Event
 
@@ -40,12 +42,12 @@ main :: proc() {
 
 
 		render.clear(&renderState)
-
-	    // Draw a white cursor block as a test (x: 100, y: 100, width: 10, height: 20)
 		render.setColor(&renderState, 0, 0, 0, 255)
 	   	render.drawRect(&renderState, 100, 100, 10, 20)
-		render.drawText(&fontSt, "I'm a text viewer now", 200, 100)
+		//render.drawText(&fontSt, "I'm a text viewer now", 200, 100)
+		render.renderEditor(&renderState, &fontSt,&editor)
 	    render.present(&renderState)
+		free_all(context.temp_allocator)
 	}
 	defer ttf.Quit()
 }
