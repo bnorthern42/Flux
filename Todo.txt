@@ -1,7 +1,49 @@
-[x] Window creation
-[]  text window area
-    -[]  start with single buffer/no table, static text display
+# CORE WINDOWING
+[x] Window creation (SDL3)
+[ ] Editor layout system
+    - [ ] Single text viewport (no splits yet)
+    - [ ] Static text rendering (read-only)
 
-[]  text input
-    -[] rope DS
-[]  File I/O
+# TEXT ENGINE
+[ ] Text buffer implementation
+    - [ ] Rope data structure
+    - [ ] Cursor model
+    - [ ] Basic editing ops (insert, delete)
+
+# INPUT SYSTEM
+[ ] Keyboard input handling
+    - [ ] Text input (UTF-8)
+    - [ ] Command input (modal-lite system)
+
+# FILE SYSTEM
+[ ] File I/O
+    - [ ] Load file into buffer
+    - [ ] Save buffer to file
+
+[ ] File explorer
+    - [ ] Directory listing
+    - [ ] Open file → buffer
+
+# BUFFER SYSTEM (CRITICAL)
+[ ] Buffer manager
+    - [ ] Buffer = file OR scratch
+    - [ ] Unique buffer instances (no duplication)
+    - [ ] Buffer lifecycle (open, close, reuse)
+
+[ ] View system
+    - [ ] View = window/pane
+    - [ ] Views reference buffers (NOT own them)
+    - [ ] Multiple views can point to same buffer
+
+# FUTURE (DON’T TOUCH YET)
+[ ] Multi-pane layout
+[ ] Tabs
+[ ] Partial Modal editing expansion
+
+Commentary: (had to put this here as I'm using Zed to make this editor and noticed one of it's quirks it shares with other editors):
+
+One thing I dislike about some editors is how they handle panes and buffers. Say I have two panes open with file1 and file2. I open another file in the left pane, work on it for a while, and forget file1 is still open. Then, with the right pane selected, I go to the file tree and open file1 again, and now the buffer gets duplicated across both panes.
+
+This happens in Zed, Emacs, and Pragtical, and it’s really annoying. It gets worse when I have a terminal at the bottom and buffers start showing up as tabs next to it.
+
+What I want instead is something stricter, some kind of set of open buffers tied to files, where reopening a file just reuses the existing buffer instead of duplicating it.

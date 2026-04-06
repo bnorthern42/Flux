@@ -38,6 +38,15 @@ getOrCreateBuffer :: proc(ed: ^Editor, path: string) -> ^Buffer{
 	buf.data = bytesToRune(data)
 	return buf
 }
+insertText :: proc(bf: ^Buffer, pos: int, text: []rune){
+	//TODO: implement
+}
+
+deleteText :: proc(bf: ^Buffer, pos: int, len: int){
+	//TODO: implement
+}
+
+
 
 RopeNode :: struct {
 	left: ^RopeNode,
