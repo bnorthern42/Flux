@@ -105,7 +105,7 @@ renderView :: proc(state: ^RendererState, fontState: ^FontState, v: ^cflux.View)
     }
 }
 
-// UPDATED: Pass the font state down
+
 renderEditor :: proc(state: ^RendererState, fontState: ^FontState, e: ^cflux.Editor) {
     for &view in e.views {
         renderView(state, fontState, &view)
